@@ -1,6 +1,9 @@
-name: 'Deployed Jira tickets notifier'
-description: 'Read all commit message since last release and bootstrap a notifier message with all the Jira tickets link'
+name: 'Deployed Jira tickets pretty message'
+description: 'Read all commit message since last release and render a pretty message with all the Jira tickets link'
 author: 'johannchopin-buyco'
+outputs:
+  message:
+    description: 'The rendered pretty message'
 runs:
   using: 'node16'
   main: 'dist/index.js'

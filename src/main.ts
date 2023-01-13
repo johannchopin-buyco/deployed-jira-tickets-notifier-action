@@ -1,18 +1,84 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 
-import {wait} from './wait'
+import GITHUB_TO_SLACK_MAPPING from './github-to-slack-mapping.json'
+
+const COMMITS_DATA_SEPARATOR = ' || '
+const JIRA_TICKET_LINK_MATCHER = /https:\/\/buycoteam.atlassian.net\/browse\/.*/
+
+export interface Commit {
+  author: string
+  message: string
+  jiraTicket?: string
+}
+
+const renderPrettyMessage = (commits: Commit[]): string => {
+  const prettyCommitList: string[] = []
+
+  commits.forEach(({author, jiraTicket}) => {
+    const matchingSlackUser = (GITHUB_TO_SLACK_MAPPING as any)[author]
+    author = matchingSlackUser ? `<@${matchingSlackUser}>` : author
+
+    if (jiraTicket) {
+      prettyCommitList.push(`- ${jiraTicket} by ${author}`)
+    }
+  })
+
+  return `🚀 Huraaa tickets have been deployed:
+  
+${prettyCommitList.join('\n')}`
+}
+
+const getExecResult = async (command: string): Promise<string> => {
+  let result = ''
+
+  await exec.exec(command, [], {
+    listeners: {
+      stdout: data => {
+        result = data.toString().trim()
+      },
+      stderr: data => {
+        throw new Error(data.toString())
+      }
+    }
+  })
+
+  return result
+}
+
+// a commit string is smtgh like "johannchopin-buyco || fix(foobar): and another one || Jira Link: https://buycoteam.atlassian.net/browse/MIS-42"
+const parseCommitString = (commit: string): Commit => {
+  const [author, message, description] = commit.split(COMMITS_DATA_SEPARATOR)
+
+  let jiraTicket: string | undefined
+  if (description) {
+    jiraTicket = description.match(JIRA_TICKET_LINK_MATCHER)?.[0] || undefined
+  }
+
+  return {
+    author,
+    message,
+    jiraTicket
+  }
+}
+
+const getCommitsFromOutput = (output: string): Commit[] => {
+  const lines = output.split(/\r?\n/).filter(line => line.length > 0)
+
+  return lines.map(line => parseCommitString(line))
+}
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
+    const lastTagVersion = await getExecResult(
+      'git describe --tags --abbrev=0 HEAD^'
+    )
+    const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%cn${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    const commits = getCommitsFromOutput(
+      await getExecResult(GET_DEPLOYED_COMMITS_DATA)
+    )
+    core.setOutput('message', renderPrettyMessage(commits))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
