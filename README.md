@@ -5,12 +5,12 @@
 
 Install the dependencies  
 ```bash
-$ yarn
+$ npm install
 ```
 
 Build the typescript and package it for distribution
 ```bash
-$ yarn build && yarn package
+$ npm run build && npm run package
 ```
 
 ## Publishing
@@ -18,7 +18,7 @@ $ yarn build && yarn package
 Actions are run from GitHub repos so we will checkin the packed dist folder. 
 
 ```bash
-$ yarn package
+$ npm run package
 $ git add dist
 $ git commit -a -m "prod dependencies"
 $ git push origin releases/v1
