@@ -24,8 +24,8 @@ const renderPrettyMessage = (commits: Commit[]): string => {
     }
   })
 
-  return `🚀 Huraaa Frontend tickets have been deployed:\n\n${prettyCommitList.join(
-    '\n'
+  return `🚀 Huraaa Frontend tickets have been deployed:\\n\\n${prettyCommitList.join(
+    '\\n'
   )}`
 }
 

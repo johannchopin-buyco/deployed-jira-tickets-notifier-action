@@ -64,7 +64,7 @@ const renderPrettyMessage = (commits) => {
             prettyCommitList.push(`- ${jiraTicket} by ${author}`);
         }
     });
-    return `🚀 Huraaa Frontend tickets have been deployed:\n\n${prettyCommitList.join('\n')}`;
+    return `🚀 Huraaa Frontend tickets have been deployed:\\n\\n${prettyCommitList.join('\\n')}`;
 };
 const getExecResult = (command) => __awaiter(void 0, void 0, void 0, function* () {
     let result = '';
