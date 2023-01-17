@@ -64,7 +64,7 @@ const renderPrettyMessage = (commits) => {
             prettyCommitList.push(`- ${jiraTicket} by ${author}`);
         }
     });
-    return `🚀 Huraaa tickets have been deployed:
+    return `🚀 Huraaa Frontend tickets have been deployed:
   
 ${prettyCommitList.join('\n')}`;
 };
