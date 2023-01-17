@@ -73,11 +73,15 @@ async function run(): Promise<void> {
     const lastTagVersion = await getExecResult(
       'git describe --tags --abbrev=0 HEAD^'
     )
-    const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%cn${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`
+    const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%an${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`
 
     const commits = getCommitsFromOutput(
       await getExecResult(GET_DEPLOYED_COMMITS_DATA)
     )
+    console.log('===')
+    console.log(renderPrettyMessage(commits))
+    console.log('===')
+
     core.setOutput('message', renderPrettyMessage(commits))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)

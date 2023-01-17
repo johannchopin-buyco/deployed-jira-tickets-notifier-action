@@ -5,7 +5,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"benjaminbuyco":"U027AANUCTB","johannchopin-buyco":"U0484906MEE","corentinradenac-buyco":"U03UQMTBUD7","FrancoRatovoson-Buyco":"U03M19QSPRV","alaattingultekin":"U01G0R4B6EL","rubyistdotjs":"U022S8681JB","aureliemarch":"U01K6A80WLE"}');
+module.exports = JSON.parse('{"benjaminbuyco":"U027AANUCTB","Benjamin Léouzon":"U027AANUCTB","johannchopin-buyco":"U0484906MEE","johannchopin":"U0484906MEE","corentinradenac-buyco":"U03UQMTBUD7","Corentin Radenac":"U03UQMTBUD7","FrancoRatovoson-Buyco":"U03M19QSPRV","alaattingultekin":"U01G0R4B6EL","rubyistdotjs":"U022S8681JB","aureliemarch":"U01K6A80WLE"}');
 
 /***/ }),
 
@@ -104,8 +104,11 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const lastTagVersion = yield getExecResult('git describe --tags --abbrev=0 HEAD^');
-            const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%cn${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`;
+            const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%an${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`;
             const commits = getCommitsFromOutput(yield getExecResult(GET_DEPLOYED_COMMITS_DATA));
+            console.log("===");
+            console.log(renderPrettyMessage(commits));
+            console.log("===");
             core.setOutput('message', renderPrettyMessage(commits));
         }
         catch (error) {
