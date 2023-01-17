@@ -1,6 +1,7 @@
 name: 'Deployed Jira tickets pretty message'
 description: 'Read all commit message since last release and render a pretty message with all the Jira tickets link'
 author: 'johannchopin-buyco'
+icon: 'bell'
 outputs:
   message:
     description: 'The rendered pretty message'
