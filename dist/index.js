@@ -60,9 +60,9 @@ const renderPrettyMessage = (commits) => {
     commits.forEach(({ author, jiraTicket, message }) => {
         const matchingSlackUser = github_to_slack_mapping_json_1.default[author];
         author = matchingSlackUser ? `<@${matchingSlackUser}>` : author;
-        const prettyCommit = `-  ${message}`;
+        let prettyCommit = `-  ${message}`;
         if (jiraTicket)
-            prettyCommit.concat(`\\n   ${jiraTicket} by ${author}`);
+            prettyCommit += `\\n   ${jiraTicket} by ${author}`;
         prettyCommitList.push(prettyCommit);
     });
     return `Huraa! A new Frontend release has been deployed:\\n\\n${prettyCommitList.join('\\n')}`;

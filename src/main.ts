@@ -18,9 +18,9 @@ const renderPrettyMessage = (commits: Commit[]): string => {
   commits.forEach(({author, jiraTicket, message}) => {
     const matchingSlackUser = (GITHUB_TO_SLACK_MAPPING as any)[author]
     author = matchingSlackUser ? `<@${matchingSlackUser}>` : author
-    const prettyCommit = `-  ${message}`
+    let prettyCommit = `-  ${message}`
 
-    if (jiraTicket) prettyCommit.concat(`\\n   ${jiraTicket} by ${author}`)
+    if (jiraTicket) prettyCommit += `\\n   ${jiraTicket} by ${author}`
 
     prettyCommitList.push(prettyCommit)
   })
