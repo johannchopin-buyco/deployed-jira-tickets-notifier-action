@@ -62,7 +62,7 @@ const renderPrettyMessage = (commits) => {
         author = matchingSlackUser ? `<@${matchingSlackUser}>` : author;
         const prettyCommit = `-  ${message}`;
         if (jiraTicket)
-            prettyCommitList.push(`\\n   ${jiraTicket} by ${author}`);
+            prettyCommit.concat(`\\n   ${jiraTicket} by ${author}`);
         prettyCommitList.push(prettyCommit);
     });
     return `Huraa! A new Frontend release has been deployed:\\n\\n${prettyCommitList.join('\\n')}`;

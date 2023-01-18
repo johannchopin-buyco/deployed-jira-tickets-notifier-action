@@ -20,7 +20,7 @@ const renderPrettyMessage = (commits: Commit[]): string => {
     author = matchingSlackUser ? `<@${matchingSlackUser}>` : author
     const prettyCommit = `-  ${message}`
 
-    if (jiraTicket) prettyCommitList.push(`\\n   ${jiraTicket} by ${author}`)
+    if (jiraTicket) prettyCommit.concat(`\\n   ${jiraTicket} by ${author}`)
 
     prettyCommitList.push(prettyCommit)
   })
