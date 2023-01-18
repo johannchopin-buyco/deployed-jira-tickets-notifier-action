@@ -105,9 +105,6 @@ function run() {
             const lastTagVersion = yield getExecResult('git describe --tags --abbrev=0 HEAD^');
             const GET_DEPLOYED_COMMITS_DATA = `git log ${lastTagVersion}..HEAD --pretty=format:"%an${COMMITS_DATA_SEPARATOR}%s${COMMITS_DATA_SEPARATOR}%b" --`;
             const commits = getCommitsFromOutput(yield getExecResult(GET_DEPLOYED_COMMITS_DATA));
-            console.log('===');
-            console.log(renderPrettyMessage(commits));
-            console.log('===');
             core.setOutput('message', renderPrettyMessage(commits));
         }
         catch (error) {

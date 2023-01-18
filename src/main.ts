@@ -79,9 +79,6 @@ async function run(): Promise<void> {
     const commits = getCommitsFromOutput(
       await getExecResult(GET_DEPLOYED_COMMITS_DATA)
     )
-    console.log('===')
-    console.log(renderPrettyMessage(commits))
-    console.log('===')
 
     core.setOutput('message', renderPrettyMessage(commits))
   } catch (error) {
