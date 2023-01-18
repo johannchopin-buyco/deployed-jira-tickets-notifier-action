@@ -57,14 +57,15 @@ const COMMITS_DATA_SEPARATOR = ' || ';
 const JIRA_TICKET_LINK_MATCHER = /https:\/\/buycoteam.atlassian.net\/browse\/.*/;
 const renderPrettyMessage = (commits) => {
     const prettyCommitList = [];
-    commits.forEach(({ author, jiraTicket }) => {
+    commits.forEach(({ author, jiraTicket, message }) => {
         const matchingSlackUser = github_to_slack_mapping_json_1.default[author];
         author = matchingSlackUser ? `<@${matchingSlackUser}>` : author;
-        if (jiraTicket) {
-            prettyCommitList.push(`- ${jiraTicket} by ${author}`);
-        }
+        const prettyCommit = `-  ${message}`;
+        if (jiraTicket)
+            prettyCommitList.push(`\\n   ${jiraTicket} by ${author}`);
+        prettyCommitList.push(prettyCommit);
     });
-    return `Huraaa Frontend tickets have been deployed:\\n\\n${prettyCommitList.join('\\n')}`;
+    return `Huraa! A new Frontend release has been deployed:\\n\\n${prettyCommitList.join('\\n')}`;
 };
 const getExecResult = (command) => __awaiter(void 0, void 0, void 0, function* () {
     let result = '';

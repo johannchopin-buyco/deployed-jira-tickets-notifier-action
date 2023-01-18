@@ -15,16 +15,17 @@ export interface Commit {
 const renderPrettyMessage = (commits: Commit[]): string => {
   const prettyCommitList: string[] = []
 
-  commits.forEach(({author, jiraTicket}) => {
+  commits.forEach(({author, jiraTicket, message}) => {
     const matchingSlackUser = (GITHUB_TO_SLACK_MAPPING as any)[author]
     author = matchingSlackUser ? `<@${matchingSlackUser}>` : author
+    const prettyCommit = `-  ${message}`
 
-    if (jiraTicket) {
-      prettyCommitList.push(`- ${jiraTicket} by ${author}`)
-    }
+    if (jiraTicket) prettyCommitList.push(`\\n   ${jiraTicket} by ${author}`)
+
+    prettyCommitList.push(prettyCommit)
   })
 
-  return `Huraaa Frontend tickets have been deployed:\\n\\n${prettyCommitList.join(
+  return `Huraa! A new Frontend release has been deployed:\\n\\n${prettyCommitList.join(
     '\\n'
   )}`
 }
