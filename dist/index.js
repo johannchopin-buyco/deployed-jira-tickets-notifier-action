@@ -5,7 +5,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"benjaminbuyco":"U027AANUCTB","Benjamin Léouzon":"U027AANUCTB","johannchopin-buyco":"U0484906MEE","johannchopin":"U0484906MEE","corentinradenac-buyco":"U03UQMTBUD7","Corentin Radenac":"U03UQMTBUD7","FrancoRatovoson-Buyco":"U03M19QSPRV","alaattingultekin":"U01G0R4B6EL","rubyistdotjs":"U022S8681JB","aureliemarch":"U01K6A80WLE"}');
+module.exports = JSON.parse('{"benjaminbuyco":"U027AANUCTB","Benjamin Léouzon":"U027AANUCTB","johannchopin-buyco":"U0484906MEE","johannchopin":"U0484906MEE","corentinradenac-buyco":"U03UQMTBUD7","Corentin Radenac":"U03UQMTBUD7","FrancoRatovoson-Buyco":"U03M19QSPRV","alaattingultekin":"U01G0R4B6EL","rubyistdotjs":"U022S8681JB","aureliemarch":"U01K6A80WLE","Adrien Castagliola":"U04S0QP2TDF","adriencastagliola-buyco":"U04S0QP2TDF"}');
 
 /***/ }),
 
